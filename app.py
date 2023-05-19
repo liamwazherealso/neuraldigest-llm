@@ -86,7 +86,8 @@ def summarize_article(article_text: str):
 
     texts = text_splitter.split_documents([article_doc])
 
-    llm = OpenAI(temperature=0, openai_api_key=config["OPENAI_API_KEY"])
+    llm = OpenAI(temperature=0, openai_api_key=config["OPENAI_API_KEY"],
+                 model_name=config["OPENAI_MODEL_NAME"])
     
     chain = load_summarize_chain(llm, chain_type="map_reduce")
 
@@ -197,6 +198,7 @@ def lambda_handler(event, _):
         "WEAVIATE_URL",
         "WEAVIATE_API_KEY",
         "OPENAI_API_KEY",
+        "OPENAI_MODEL_NAME"
     ]
     for conf in configVars:
         try:
